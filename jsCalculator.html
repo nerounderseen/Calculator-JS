@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
-            background-color: cornflowerblue;
+            background-color: rgb(50, 50, 50);
         }
 
         .container {
@@ -16,7 +16,7 @@
 
         table {
             width: 100%;
-            border-color: #f4f4f4;
+            border-color: black;
         }
 
         td {
@@ -26,21 +26,24 @@
         button {
             width: 100%;
             height: 70px;
-            font-size: 24px;
-            background-color: white;
+            font-size: 28px;
+            font-family: monospace;
+            background-color: cornflowerblue;
             border: none;
         }
 
         #inputLabel {
             height: 120px;
             font-size: 40px;
+            font-family: monospace;
             vertical-align: bottom;
+            color: #fefefe;
             text-align: right;
             padding-right: 16px;
-            background-color: #ececec;
+            background-color: rgb(132, 132, 132);
         }
     </style>
-    <title>Document</title>
+    <title>jsCalculator</title>
 </head>
 
 <body>
@@ -80,7 +83,8 @@
         </table>
     </div>
 </body>
-<script type="text/javascript" async>
+
+<script type="text/javascript">
     var inputLabel = document.getElementById('inputLabel');
     function pushBtn(obj) {
         var pushed = obj.innerHTML;
