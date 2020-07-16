@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
+    <style type="text/css">
         * {
             font-family: monospace;
         }
@@ -49,7 +49,6 @@
     </style>
     <title>jsCalculator</title>
 </head>
-
 <body>
     <div class="container">
         <table border="1" cellspacing="0">
@@ -59,25 +58,25 @@
             <tr>
                 <td colspan="2"><button onclick="pushBtn(this);">AC</button></td>
                 <td><button onclick="pushBtn(this);">◄</button></td>
-                <td><button onclick="pushBtn(this);">/</button></td>
+                <td><button class="operator" onclick="pushBtn(this);">/</button></td>
             </tr>
             <tr>
                 <td><button onclick="pushBtn(this);">7</button></td>
                 <td><button onclick="pushBtn(this);">8</button></td>
                 <td><button onclick="pushBtn(this);">9</button></td>
-                <td><button onclick="pushBtn(this);">*</button></td>
+                <td><button class="operator" onclick="pushBtn(this);">*</button></td>
             </tr>
             <tr>
                 <td><button onclick="pushBtn(this);">4</button></td>
                 <td><button onclick="pushBtn(this);">5</button></td>
                 <td><button onclick="pushBtn(this);">6</button></td>
-                <td><button onclick="pushBtn(this);">-</button></td>
+                <td><button class="operator" onclick="pushBtn(this);">-</button></td>
             </tr>
             <tr>
                 <td><button onclick="pushBtn(this);">1</button></td>
                 <td><button onclick="pushBtn(this);">2</button></td>
                 <td><button onclick="pushBtn(this);">3</button></td>
-                <td><button onclick="pushBtn(this);">+</button></td>
+                <td><button class="operator" onclick="pushBtn(this);">+</button></td>
             </tr>
             <tr>
                 <td colspan="2"><button onclick="pushBtn(this);">0</button></td>
@@ -90,26 +89,25 @@
 <script type="text/javascript">
     var inputLabel = document.getElementById('inputLabel');
     function pushBtn(obj) {
-        var pushed = obj.innerHTML;
+        var pushed = obj.innerText;
         if (pushed == '=')
-            inputLabel.innerHTML = eval(inputLabel.innerHTML);
+            inputLabel.innerText = eval(inputLabel.innerText);
         else if (pushed == 'AC')
-            inputLabel.innerHTML = 0;
+            inputLabel.innerText = 0;
         else if (pushed == '◄') {
-            inputLabel.innerHTML = inputLabel.innerHTML.slice(0, -1)
-            if (inputLabel.innerHTML == '')
-                inputLabel.innerHTML = 0;
+            inputLabel.innerText = inputLabel.innerText.slice(0, -1)
+            if (inputLabel.innerText == '')
+                inputLabel.innerText = 0;
         }
         else if (pushed == '.') {
-            if (!inputLabel.innerHTML.includes('.'))
-                inputLabel.innerHTML += '.';
+            if (!inputLabel.innerText.includes('.'))
+                inputLabel.innerText += '.';
         }
         else
-            if (inputLabel.innerHTML == '0')
-                inputLabel.innerHTML = pushed;
+            if (inputLabel.innerText == '0')
+                inputLabel.innerText = pushed;
             else
-                inputLabel.innerHTML += pushed;
+                inputLabel.innerText += pushed;
     }
 </script>
-
 </html>
