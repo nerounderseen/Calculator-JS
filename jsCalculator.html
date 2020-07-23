@@ -35,7 +35,7 @@
             border: none;
         }
 
-        #inputLabel {
+        #calcDisplay {
             height: 120px;
             font-size: 40px;
             vertical-align: bottom;
@@ -49,65 +49,112 @@
     </style>
     <title>jsCalculator</title>
 </head>
+
 <body>
     <div class="container">
         <table border="1" cellspacing="0">
             <tr>
-                <td colspan="4" id="inputLabel">0</td>
+                <td colspan="4" id="calcDisplay">0</td>
             </tr>
             <tr>
-                <td colspan="2"><button onclick="pushBtn(this);">AC</button></td>
-                <td><button onclick="pushBtn(this);">◄</button></td>
-                <td><button class="operator" onclick="pushBtn(this);">/</button></td>
+                <td colspan="2"><button onclick="allClear(this);">AC</button></td>
+                <td><button class="del" onclick="calcDeleteBtn(this);">◄</button></td>
+                <td><button onclick="operand(this);">/</button></td>
             </tr>
             <tr>
-                <td><button onclick="pushBtn(this);">7</button></td>
-                <td><button onclick="pushBtn(this);">8</button></td>
-                <td><button onclick="pushBtn(this);">9</button></td>
-                <td><button class="operator" onclick="pushBtn(this);">*</button></td>
+                <td><button onclick="displayNumber(this);">7</button></td>
+                <td><button onclick="displayNumber(this);">8</button></td>
+                <td><button onclick="displayNumber(this);">9</button></td>
+                <td><button onclick="operand(this);">*</button></td>
             </tr>
             <tr>
-                <td><button onclick="pushBtn(this);">4</button></td>
-                <td><button onclick="pushBtn(this);">5</button></td>
-                <td><button onclick="pushBtn(this);">6</button></td>
-                <td><button class="operator" onclick="pushBtn(this);">-</button></td>
+                <td><button onclick="displayNumber(this);">4</button></td>
+                <td><button onclick="displayNumber(this);">5</button></td>
+                <td><button onclick="displayNumber(this);">6</button></td>
+                <td><button onclick="operand(this);">-</button></td>
             </tr>
             <tr>
-                <td><button onclick="pushBtn(this);">1</button></td>
-                <td><button onclick="pushBtn(this);">2</button></td>
-                <td><button onclick="pushBtn(this);">3</button></td>
-                <td><button class="operator" onclick="pushBtn(this);">+</button></td>
+                <td><button onclick="displayNumber(this);">1</button></td>
+                <td><button onclick="displayNumber(this);">2</button></td>
+                <td><button onclick="displayNumber(this);">3</button></td>
+                <td><button onclick="operand(this);">+</button></td>
             </tr>
             <tr>
-                <td colspan="2"><button onclick="pushBtn(this);">0</button></td>
-                <td><button onclick="pushBtn(this);">.</button></td>
-                <td><button onclick="pushBtn(this);">=</button></td>
+                <td colspan="2"><button onclick="displayNumber(this);">0</button></td>
+                <td><button onclick="addDecimal(this);">.</button></td>
+                <td><button onclick="equate(this);">=</button></td>
             </tr>
         </table>
     </div>
 </body>
 <script type="text/javascript">
-    var inputLabel = document.getElementById('inputLabel');
-    function pushBtn(obj) {
-        var pushed = obj.innerText;
-        if (pushed == '=')
-            inputLabel.innerText = eval(inputLabel.innerText);
-        else if (pushed == 'AC')
-            inputLabel.innerText = 0;
-        else if (pushed == '◄') {
-            inputLabel.innerText = inputLabel.innerText.slice(0, -1)
-            if (inputLabel.innerText == '')
-                inputLabel.innerText = 0;
+    var calcDisplay = document.getElementById('calcDisplay')
+    var finalDisplay = document.getElementsByClassName('finalDisplay')
+    var firstOP = ''
+    var secondOP = ''
+    var calcresult = undefined
+    var pushed = undefined
+    var operator = undefined
+
+    function displayNumber(obj) {
+        pushed = obj.innerText
+        if (calcDisplay.innerText == '0') {
+            calcDisplay.innerText = pushed
         }
-        else if (pushed == '.') {
-            if (!inputLabel.innerText.includes('.'))
-                inputLabel.innerText += '.';
+        else {
+            calcDisplay.innerText += pushed
         }
-        else
-            if (inputLabel.innerText == '0')
-                inputLabel.innerText = pushed;
-            else
-                inputLabel.innerText += pushed;
+    }
+
+    function addDecimal(obj) {
+        if (!calcDisplay.innerText.includes('.')) {
+            calcDisplay.innerText += obj.innerText
+        }
+    }
+
+    function allClear() {
+        calcDisplay.innerText = '0'
+        firstOp = ''
+        secondOP = ''
+    }
+
+    function calcDeleteBtn() {
+        calcDisplay.innerText = calcDisplay.innerText.slice(0, -1)
+        if (calcDisplay.innerText == '') {
+            calcDisplay.innerText = '0'
+        }
+    }
+
+    function operand(obj) {
+        if (secondOP !== '') {
+            equate()
+        }
+        secondOP = calcDisplay.innerText
+        operator = obj.innerText
+        calcDisplay.innerText = '0'
+    }
+
+    function equate() {
+        var n2 = parseFloat(secondOP)
+        var n1 = parseFloat(calcDisplay.innerText)
+        switch (operator) {
+            case '+':
+                calcresult = n2 + n1
+                break;
+            case '-':
+                calcresult = n2 - n1
+                break;
+            case '*':
+                calcresult = n2 * n1
+                break;
+            case '/':
+                calcresult = n2 / n1
+                break;
+        }
+        calcDisplay.innerText = calcresult
+        operator = undefined
+        secondOP = ''
     }
 </script>
+
 </html>
