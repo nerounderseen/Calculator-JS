@@ -39,7 +39,6 @@
             height: 120px;
             font-size: 40px;
             vertical-align: bottom;
-            word-wrap: break-word;
             word-break: break-all;
             color: #fefefe;
             text-align: right;
@@ -59,25 +58,25 @@
             <tr>
                 <td colspan="2"><button onclick="allClear(this);">AC</button></td>
                 <td><button class="del" onclick="calcDeleteBtn(this);">◄</button></td>
-                <td><button onclick="operand(this);">/</button></td>
+                <td><button onclick="getOperand(this);">/</button></td>
             </tr>
             <tr>
                 <td><button onclick="displayNumber(this);">7</button></td>
                 <td><button onclick="displayNumber(this);">8</button></td>
                 <td><button onclick="displayNumber(this);">9</button></td>
-                <td><button onclick="operand(this);">*</button></td>
+                <td><button onclick="getOperand(this);">*</button></td>
             </tr>
             <tr>
                 <td><button onclick="displayNumber(this);">4</button></td>
                 <td><button onclick="displayNumber(this);">5</button></td>
                 <td><button onclick="displayNumber(this);">6</button></td>
-                <td><button onclick="operand(this);">-</button></td>
+                <td><button onclick="getOperand(this);">-</button></td>
             </tr>
             <tr>
                 <td><button onclick="displayNumber(this);">1</button></td>
                 <td><button onclick="displayNumber(this);">2</button></td>
                 <td><button onclick="displayNumber(this);">3</button></td>
-                <td><button onclick="operand(this);">+</button></td>
+                <td><button onclick="getOperand(this);">+</button></td>
             </tr>
             <tr>
                 <td colspan="2"><button onclick="displayNumber(this);">0</button></td>
@@ -90,19 +89,16 @@
 <script type="text/javascript">
     var calcDisplay = document.getElementById('calcDisplay')
     var finalDisplay = document.getElementsByClassName('finalDisplay')
-    var firstOP = ''
-    var secondOP = ''
-    var calcresult = undefined
-    var pushed = undefined
+    var tempNumContainer = ''
+    var result = undefined
     var operator = undefined
 
     function displayNumber(obj) {
-        pushed = obj.innerText
-        if (calcDisplay.innerText == '0') {
-            calcDisplay.innerText = pushed
+        if (calcDisplay.innerText == 0) {
+            calcDisplay.innerText = obj.innerText
         }
         else {
-            calcDisplay.innerText += pushed
+            calcDisplay.innerText += obj.innerText
         }
     }
 
@@ -113,47 +109,50 @@
     }
 
     function allClear() {
-        calcDisplay.innerText = '0'
-        firstOp = ''
-        secondOP = ''
+        calcDisplay.innerText = 0
+        operator = undefined
+        tempNumContainer = ''
     }
 
     function calcDeleteBtn() {
         calcDisplay.innerText = calcDisplay.innerText.slice(0, -1)
         if (calcDisplay.innerText == '') {
-            calcDisplay.innerText = '0'
+            calcDisplay.innerText = 0
         }
     }
 
-    function operand(obj) {
-        if (secondOP !== '') {
+    function getOperand(obj) {
+        if (tempNumContainer !== '') {
             equate()
         }
-        secondOP = calcDisplay.innerText
+        tempNumContainer = calcDisplay.innerText
         operator = obj.innerText
-        calcDisplay.innerText = '0'
+        calcDisplay.innerText = 0
     }
 
     function equate() {
-        var n2 = parseFloat(secondOP)
+        var n2 = parseFloat(tempNumContainer)
         var n1 = parseFloat(calcDisplay.innerText)
         switch (operator) {
             case '+':
-                calcresult = n2 + n1
+                result = n2 + n1
                 break;
             case '-':
-                calcresult = n2 - n1
+                result = n2 - n1
                 break;
             case '*':
-                calcresult = n2 * n1
+                result = n2 * n1
                 break;
             case '/':
-                calcresult = n2 / n1
+                result = n2 / n1
+                if (result === Infinity)
+                    result = 'Cannot Divide by Zero'
                 break;
         }
-        calcDisplay.innerText = calcresult
         operator = undefined
-        secondOP = ''
+        tempNumContainer = ''
+        console.log(result)
+        calcDisplay.innerText = result
     }
 </script>
 
